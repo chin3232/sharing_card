@@ -1,0 +1,97 @@
+<!doctype html>
+
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Computer</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <h1 style="text-align: center">หนึ่งเพลง หลายเรื่องราว</h1>
+
+    <div class="topBar">
+
+        <!-- ฝั่งซ้าย -->
+    <div class="leftGroup">
+      <!-- ค้นหา ปุ่มเพิ่มเพลง ปุ่มไมค์บันทึกเสียง -->
+      <input id="search" placeholder="ค้นหาเพลง" oninput="filterSongs()" />
+
+      <!-- ข้อมูลภานยในปุ่มฟิลเตอร์ -->
+      <select id="emojiFilter" onchange="filterSongs()">
+        <option value="">ทั้งหมด</option>
+        <option value="😊">😊 สุข</option>
+        <option value="😢">😢 เศร้า</option>
+        <option value="🔥">🔥 สนุก</option>
+        <option value="❤️">❤️ รัก</option>
+      </select>
+
+      <select id="categoryFilter" onchange="filterSongs()">
+        <option value="">ทุกหมวด</option>
+        <option value="เศร้า">เพลงเศร้า</option>
+        <option value="รัก">เพลงรัก</option>
+        <option value="สนุก">เพลงสนุก</option>
+        <option value="กำลังใจ">เพลงกำลังใจ</option>
+      </select>
+    </div>
+
+    <div class="rightGroup">
+      <button id="addSongButton" onclick="openPopup()">เพิ่มเพลง</button>
+      <button id="mipage" onclick="startSystem()">🎤</button>
+    </div>
+
+    <!-- การ์ด -->
+    <div id="cards"></div>
+
+    <!-- แผ่น popup แสดงโชว์ให้ input -->
+    <div id="popup" class="popup">
+      <div class="popupContent" style="text-align: center">
+        <h2>เพิ่มเพลง</h2>
+        <form id="songForm" onsubmit="saveSong(event)">
+          <input id="songName" placeholder="ชื่อเพลง" required />
+          <br />
+          อารมณ์ความรู้สึก
+          <select id="emoji">
+            <option value="😊">😊 สุข</option>
+            <option value="😢">😢 เศร้า</option>
+            <option value="🔥">🔥 สนุก</option>
+            <option value="❤️">❤️ รัก</option>
+          </select>
+          <br />
+          หมวดหมู่
+          <select id="category">
+            <option value="เศร้า">เพลงเศร้า</option>
+            <option value="รัก">เพลงรัก</option>
+            <option value="สนุก">เพลงสนุก</option>
+            <option value="กำลังใจ">เพลงกำลังใจ</option>
+          </select>
+
+          <br />
+          คำอธิบาย
+          <br />
+          <!-- ข้อความคำอธิบาย -->
+          <textarea id="desc" required></textarea>
+          <br />
+
+          <!-- ปุ่มภายใน popup -->
+          <div class="popupFooter">
+            <button id="mipopup" onclick="startSystem()">🎤</button>
+            <button id="saveButton" type="submit">save</button>
+          </div>
+        </form>
+
+        <button id="cancelButton" class="btn-cancel" onclick="closePopup()">
+          ❌
+        </button>
+      </div>
+    </div>
+
+    <script src="js/script.js"></script>
+
+    <script>
+      loadAll();
+    </script>
+  </body>
+</html>

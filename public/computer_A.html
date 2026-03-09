@@ -1,0 +1,87 @@
+<!doctype html>
+
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Computer_A</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <h1 style="text-align: center">หนึ่งเพลง หลายเรื่องราว</h1>
+
+    <input id="search" placeholder="ค้นหาเพลง" oninput="filterSongs()" />
+
+    <!-- <select id="emojiFilter" onchange="filterSongs()">
+      <option value="">ทั้งหมด</option>
+
+      <option>😊 สุข</option>
+
+      <option>😢 เศร้า</option>
+
+      <option>🔥 สนุก</option>
+
+      <option>❤️ รัก</option>
+    </select> -->
+    <select id="emojiFilter" onchange="filterSongs()">
+      <option value="">ทั้งหมด</option>
+      <option value="😊">😊 สุข</option>
+      <option value="😢">😢 เศร้า</option>
+      <option value="🔥">🔥 สนุก</option>
+      <option value="❤️">❤️ รัก</option>
+    </select>
+
+    <button onclick="startSystem()">🎤</button>
+
+
+    <div id="cards"></div>
+
+    <div id="popup" class="popup">
+      <div class="popupContent" style="text-align: center">
+        <h2>เพิ่มเพลง</h2>
+
+        <input id="songName" placeholder="ชื่อเพลง" />
+        <!-- <button onclick="startVoice('songName')">🎤</button> -->
+        <!-- <button onclick="startFullVoice()">🎤 ใช้เสียงทั้งหมด</button> -->
+        <br />
+        อิโมจิ
+        <select id="emoji">
+          <option value="😊">😊 สุข</option>
+          <option value="😢">😢 เศร้า</option>
+          <option value="🔥">🔥 สนุก</option>
+          <option value="❤️">❤️ รัก</option>
+        </select>
+        <!-- <select id="emoji">
+          <option>😊</option>
+
+          <option>😢 </option>
+
+          <option>🔥</option>
+
+          <option>❤️</option>
+        </select> -->
+        <br />
+        คำอธิบาย
+        <!-- <textarea id="desc"> </textarea> -->
+        <br />
+        <textarea id="desc"></textarea>
+        <br />
+        <button onclick="startSystem()">🎤</button>
+        <button onclick="saveSong()">save</button>
+
+        <button onclick="closePopup()">close</button>
+      </div>
+    </div>
+
+    <script src="js/script.js"></script>
+
+    <!-- <script>
+      loadAll();
+    </script> -->
+    <script>
+      loadAll();
+    </script>
+  </body>
+</html>

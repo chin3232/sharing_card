@@ -1,0 +1,265 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;500&display=swap');
+
+body {
+  font-family: 'Kanit', sans-serif;
+  margin: 0;
+  background: linear-gradient(to bottom, #f5f1e6, #e8dcc7);
+  color: #3a2f23;
+}
+
+/* แถบบน */
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px;
+  flex-wrap: wrap;
+}
+
+/* กลุ่มซ้าย */
+.leftGroup {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* กลุ่มขวา */
+.rightGroup {
+  display: flex;
+  gap: 10px;
+}
+
+
+/* ===== HEADER ===== */
+h1 {
+  text-align: center;
+  padding: 20px;
+  margin: 0;
+  background: #3a2f23;
+  color: #f5f1e6;
+  letter-spacing: 2px;
+  font-weight: 500;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== FILTER BAR ===== */
+input,
+select {
+  padding: 8px 12px;
+  margin: 5px;
+  border-radius: 20px;
+  border: 1px solid #c2b59b;
+  background: #fffaf0;
+}
+
+/*===== setting button all =====*/
+#mipage {
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  background: #b08d57;
+  color: white;
+  transition: 0.3s;
+}
+
+#mipage:hover {
+  background: #8c6b3f;
+}
+
+#addSongButton {
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  background: #b08d57;
+  color: white;
+  transition: 0.3s;
+}
+
+
+/* ปุ่ม Save */
+#saveButton {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #4CAF50;
+  color: white;
+  cursor: pointer;
+}
+
+/* ปุ่มไมค์ */
+#mipopup {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #b08d57;
+  color: white;
+  cursor: pointer;
+}
+
+#cancelButton {
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  background: #b08d57;
+  color: white;
+  transition: 0.3s;
+}
+
+/* ===== CARD GALLERY ===== */
+#cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+/* ===== CARD STYLE ===== */
+.card {
+  background: #fffaf0;
+  padding: 15px;
+  border-radius: 15px;
+  border: 2px solid #d4c4a8;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  min-height: 100px;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card h3 {
+  margin: 0;
+  color: #5c4033;
+}
+
+.card p {
+  margin: 5px 0;
+}
+
+/* ===== POPUP ===== */
+.popup {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+}
+
+.popupContent {
+  position: relative;
+  background: #fffaf0;
+  width: 350px;
+  margin: 80px auto;
+  padding: 25px;
+  border-radius: 20px;
+  border: 2px solid #b08d57;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.popupContent h2 {
+  margin-top: 0;
+  color: #5c4033;
+}
+
+textarea {
+  width: 90%;
+  height: 80px;
+  border-radius: 10px;
+  border: 1px solid #c2b59b;
+  padding: 8px;
+  background: #fffaf0;
+}
+
+/* ปุ่ม Cancel มุมขวาบน */
+.btn-cancel {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* จัดปุ่มล่าง */
+.popupFooter {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+
+/* ===== Floating Menu ===== */
+.fabMenu {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: none;
+  flex-direction: column;
+  align-items: flex-end;
+  z-index: 999;
+}
+
+.fabMain {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  background: #b08d57;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.fabOptions {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.fabOptions button {
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: none;
+  background: #333;
+  color: white;
+  cursor: pointer;
+}
+
+.fabOptions.show {
+  display: flex;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 600px) {
+  .popupContent {
+    width: 90%;
+  }
+
+  #cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
+  }
+
+    .rightGroup {
+    display: none; /* ซ่อนปุ่มเดิม */
+  }
+
+  .fabMenu {
+    display: flex; /* แสดงเมนูลอย */
+  }
+  
+}
