@@ -10,11 +10,24 @@
   </head>
 
   <body>
-    <h1 style="text-align: center">หนึ่งเพลง หลายเรื่องราว</h1>
+    <div class="headerBar">
+      <h1>หนึ่งเพลง หลายเรื่องราว</h1>
+
+      <div class="langSwitch">
+        <button onclick="setLanguage('th')">TH ไทย</button>
+        <button onclick="setLanguage('en')">EN</button>
+      </div>
+    </div>
+    <!-- <div class="navbar">
+      <div class="langSwitch">
+        <button onclick="setLanguage('th')">🇹🇭 ไทย</button>
+        <button onclick="setLanguage('en')">🇬🇧 EN</button>
+      </div>
+    </div>
+    <h1 style="text-align: center">หนึ่งเพลง หลายเรื่องราว</h1> -->
 
     <div class="topBar">
-
-        <!-- ฝั่งซ้าย -->
+      <!-- ฝั่งซ้าย -->
       <div class="leftGroup">
         <!-- ค้นหา ปุ่มเพิ่มเพลง ปุ่มไมค์บันทึกเสียง -->
         <input id="search" placeholder="ค้นหาเพลง" oninput="filterSongs()" />
@@ -26,6 +39,12 @@
           <option value="😢">😢 เศร้า</option>
           <option value="🔥">🔥 สนุก</option>
           <option value="❤️">❤️ รัก</option>
+          <option value="🙂">🙂 สงบ ผ่อนคลาย</option>
+          <option value="😡">😡 รัก</option>
+          <option value="😐">😐 เฉย ๆ</option>
+          <option value="😰">😰 เครียด กังวล</option>
+          <option value="🤩">🤩 ตื่นเต้น</option>
+          <option value="😴">😴 เหนื่อย</option>
         </select>
 
         <select id="categoryFilter" onchange="filterSongs()">
@@ -34,6 +53,16 @@
           <option value="รัก">เพลงรัก</option>
           <option value="สนุก">เพลงสนุก</option>
           <option value="กำลังใจ">เพลงกำลังใจ</option>
+          <option value="สุข">เพลงมีความสุข</option>
+          <option value="ผ่อนคลาย">เพลงผ่อนคลาย</option>
+          <option value="คิดถึง">เพลงคิดถึง</option>
+          <option value="ก่อนนอน">เพลงก่อนนอน</option>
+          <option value="ปลุกพลัง">เพลงปลุกพลัง</option>
+          <option value="เหงา">เพลงเหงา</option>
+          <option value="สมาธิ">เพลงสมาธิ</option>
+          <option value="เช้า">เพลงยามเช้า</option>
+          <option value="ขับรถ">เพลงขับรถ</option>
+          <option value="หนังสือ">เพลงอ่านหนังสือ</option>
         </select>
       </div>
 
@@ -42,7 +71,6 @@
         <button id="mipage" onclick="startSystem()">🎤</button>
       </div>
     </div>
-    
 
     <!-- การ์ด -->
     <div id="cards"></div>
@@ -50,37 +78,52 @@
     <!-- แผ่น popup แสดงโชว์ให้ input -->
     <div id="popup" class="popup">
       <div class="popupContent" style="text-align: center">
-        <h2>เพิ่มเพลง</h2>
+        <h2 id="popupTitle">เพิ่มเพลง</h2>
         <form id="songForm" onsubmit="saveSong(event)">
           <input id="songName" placeholder="ชื่อเพลง" required />
           <br />
-          อารมณ์ความรู้สึก
+          <div class="selectRow" >
           <select id="emoji">
+            <option id="emojiDefault" value="" disabled selected>อารมณ์ความรู้สึก</option>
             <option value="😊">😊 สุข</option>
             <option value="😢">😢 เศร้า</option>
             <option value="🔥">🔥 สนุก</option>
             <option value="❤️">❤️ รัก</option>
+            <option value="🙂">🙂 สงบ ผ่อนคลาย</option>
+            <option value="😡">😡 รัก</option>
+            <option value="😐">😐 เฉย ๆ</option>
+            <option value="😰">😰 เครียด กังวล</option>
+            <option value="🤩">🤩 ตื่นเต้น</option>
+            <option value="😴">😴 เหนื่อย</option>
           </select>
-          <br />
-          หมวดหมู่
+          <!-- <br /> -->
           <select id="category">
+            <option id="categoryDefault" value="" disabled selected>หมวดหมู่</option>
             <option value="เศร้า">เพลงเศร้า</option>
             <option value="รัก">เพลงรัก</option>
             <option value="สนุก">เพลงสนุก</option>
             <option value="กำลังใจ">เพลงกำลังใจ</option>
+            <option value="สุข">เพลงมีความสุข</option>
+            <option value="ผ่อนคลาย">เพลงผ่อนคลาย</option>
+            <option value="คิดถึง">เพลงคิดถึง</option>
+            <option value="ก่อนนอน">เพลงก่อนนอน</option>
+            <option value="ปลุกพลัง">เพลงปลุกพลัง</option>
+            <option value="เหงา">เพลงเหงา</option>
+            <option value="สมาธิ">เพลงสมาธิ</option>
+            <option value="เช้า">เพลงยามเช้า</option>
+            <option value="ขับรถ">เพลงขับรถ</option>
+            <option value="หนังสือ">เพลงอ่านหนังสือ</option>
           </select>
+          </div>
 
-          <br />
-          คำอธิบาย
-          <br />
           <!-- ข้อความคำอธิบาย -->
-          <textarea id="desc" required></textarea>
+          <textarea id="desc" required placeholder="คำอธิบาย"></textarea>
           <br />
 
           <!-- ปุ่มภายใน popup -->
           <div class="popupFooter">
             <button id="mipopup" onclick="startSystem()">🎤</button>
-            <button id="saveButton" type="submit">save</button>
+            <button id="saveButton" type="submit">บันทึก</button>
           </div>
         </form>
 
@@ -92,10 +135,9 @@
 
     <!-- Floating Menu (Mobile Only) -->
     <div class="fabMenu">
-      
       <div class="fabOptions" id="fabOptions">
-        <button onclick="openPopup()">🎵 เพิ่มเพลง</button>
-        <button onclick="startSystem()">🎤 ไมค์</button>
+        <button id="fabAdd" onclick="openPopup()">🎵 เพิ่มเพลง</button>
+        <button id="fabVoice" onclick="startSystem()">🎤 กรอกข้อมูลด้วยเสียง</button>
       </div>
       <button class="fabMain" onclick="toggleMenu()">＋</button>
     </div>

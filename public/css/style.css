@@ -1,11 +1,59 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;500&display=swap');
 
 body {
-  font-family: 'Kanit', sans-serif;
+  font-family: sans-serif;
   margin: 0;
-  background: linear-gradient(to bottom, #f5f1e6, #e8dcc7);
-  color: #3a2f23;
+
+  background: linear-gradient(
+    135deg,
+    #E8DCFF 0%,
+    #d9c8ff 50%,
+    #cbb3ff 100%
+  );
+
+  color: #1A1A1A;
 }
+/* ===== HEADER BAR ===== */
+.headerBar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:0 20px;
+
+  background:linear-gradient(135deg,#9B5FE3,#7e3fd9);
+}
+
+/* แก้ h1 ใน header */
+.headerBar h1{
+  text-align: center;
+  background:none;
+  box-shadow:none;
+  padding:20px 0;
+  margin:0;
+}
+
+/* ปุ่มเปลี่ยนภาษา */
+.langSwitch{
+  display:flex;
+  gap:8px;
+}
+
+.langSwitch button{
+  border:none;
+  padding:6px 12px;
+  border-radius:14px;
+  background:rgba(255,255,255,0.25);
+  color:white;
+  cursor:pointer;
+  font-size:14px;
+  transition:0.2s;
+}
+
+.langSwitch button:hover{
+  background:rgba(255,255,255,0.4);
+}
+
 
 /* แถบบน */
 .topBar {
@@ -14,6 +62,22 @@ body {
   align-items: center;
   margin: 15px;
   flex-wrap: wrap;
+}
+
+
+#songName {
+  width: 100%;
+  box-sizing: border-box;
+}
+input:focus,
+select:focus,
+textarea:focus{
+  outline:none;
+  border:2px solid #9B5FE3;
+}
+input::placeholder,
+textarea::placeholder{
+  color:#1A1A1A;
 }
 
 /* กลุ่มซ้าย */
@@ -33,13 +97,16 @@ body {
 /* ===== HEADER ===== */
 h1 {
   text-align: center;
-  padding: 20px;
+  padding: 22px;
   margin: 0;
-  background: #3a2f23;
-  color: #f5f1e6;
+
+  background: linear-gradient(135deg,#9B5FE3,#7e3fd9);
+  color: white;
+
   letter-spacing: 2px;
   font-weight: 500;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
 }
 
 /* ===== FILTER BAR ===== */
@@ -48,23 +115,47 @@ select {
   padding: 8px 12px;
   margin: 5px;
   border-radius: 20px;
-  border: 1px solid #c2b59b;
-  background: #fffaf0;
+  border: 1px solid #9B5FE3;
+  background: white;
+
+  /* transition: 0.1s; */
+}
+
+input:hover,
+select:hover{
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  outline:none;
+  border:2px solid #9B5FE3;
+  box-shadow:0 0 10px rgba(155,95,227,0.4);
 }
 
 /*===== setting button all =====*/
-#mipage {
+#mipage,
+#addSongButton{
   padding: 8px 14px;
   border-radius: 20px;
   border: none;
   cursor: pointer;
-  background: #b08d57;
-  color: white;
-  transition: 0.3s;
+
+  background: #FFDE59;
+  color: #1A1A1A;
+
+  transition: all 0.25s;
+}
+
+#mipage:hover,
+#addSongButton:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
 }
 
 #mipage:hover {
-  background: #8c6b3f;
+  background: #ffd633;
 }
 
 #addSongButton {
@@ -72,40 +163,73 @@ select {
   border-radius: 20px;
   border: none;
   cursor: pointer;
-  background: #b08d57;
-  color: white;
+  background: #FFDE59;
+  color: #1A1A1A;
   transition: 0.3s;
 }
 
 
-/* ปุ่ม Save */
-#saveButton {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 8px;
-  background: #4CAF50;
-  color: white;
-  cursor: pointer;
+/* ===== SAVE BUTTON ===== */
+#saveButton{
+  background:#9B5FE3;
+  border:none;
+  color:white;
+  padding:12px 26px;
+  border-radius:14px;
+  font-size:15px;
+  cursor:pointer;
+  transition:0.2s;
+  
 }
 
-/* ปุ่มไมค์ */
-#mipopup {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 8px;
-  background: #b08d57;
-  color: white;
-  cursor: pointer;
+#saveButton:hover{
+  background:#7f44d6;
 }
 
-#cancelButton {
-  padding: 8px 14px;
-  border-radius: 20px;
-  border: none;
-  cursor: pointer;
-  background: #b08d57;
-  color: white;
-  transition: 0.3s;
+
+/* ===== MIC BUTTON ===== */
+#mipopup{
+  background:#ffffff;
+  color:#9B5FE3;
+  padding:12px 18px;
+  border-radius:14px;
+  border:none;
+  cursor:pointer;
+  font-size:18px;
+  transition:0.2s;
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+
+}
+
+#mipopup:hover{
+  background:#f3edff;
+}
+
+
+/* ===== CANCEL BUTTON ===== */
+.btn-cancel{
+  position:absolute;
+  top:14px;
+  right:14px;
+  background:#9B5FE3;
+  color:white;
+  border:none;
+  width:40px;
+  height:40px;
+  border-radius:14px;
+  font-size:18px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.btn-cancel:hover{
+  background:#7f44d6;
 }
 
 /* ===== CARD GALLERY ===== */
@@ -119,22 +243,24 @@ select {
 
 /* ===== CARD STYLE ===== */
 .card {
-  background: #fffaf0;
+  background: white;
   padding: 15px;
-  border-radius: 15px;
-  border: 2px solid #d4c4a8;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-  min-height: 100px;
+  border-radius: 18px;
+
+  border: 2px solid #E8DCFF;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+
+  transition: all 0.3s ease;
 }
 
 .card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.15);
 }
-
 .card h3 {
   margin: 0;
-  color: #5c4033;
+  color: #9B5FE3;
 }
 
 .card p {
@@ -155,28 +281,48 @@ select {
 
 .popupContent {
   position: relative;
-  background: #fffaf0;
+  background: white;
+
   width: 350px;
-  margin: 80px auto;
+  margin: 60px auto;
   padding: 25px;
-  border-radius: 20px;
-  border: 2px solid #b08d57;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  text-align: center;
+
+  border-radius: 22px;
+
+  border: 2px solid #9B5FE3;
+
+  box-shadow: 
+  0 15px 40px rgba(0,0,0,0.2),
+  0 5px 10px rgba(0,0,0,0.1);
+}
+
+.selectRow{
+  display:flex;
+  gap:53px;
+}
+
+.selectRow select{
+  flex:1;
+  min-width:0;
 }
 
 .popupContent h2 {
   margin-top: 0;
-  color: #5c4033;
+  color: #9B5FE3;
 }
 
+.popupContent textarea{
+  width:100%;
+  height: 100px;
+  box-sizing:border-box;
+}
 textarea {
-  width: 90%;
-  height: 80px;
+  width: 10%;
+  height: 100px;
   border-radius: 10px;
-  border: 1px solid #c2b59b;
-  padding: 8px;
-  background: #fffaf0;
+  border: 1px solid #9B5FE3;
+  padding: 16px;
+  background: #ffffff;
 }
 
 /* ปุ่ม Cancel มุมขวาบน */
@@ -212,13 +358,24 @@ textarea {
 .fabMain {
   width: 60px;
   height: 60px;
+
   border-radius: 50%;
   border: none;
-  background: #b08d57;
+
+  background: linear-gradient(135deg,#9B5FE3,#7e3fd9);
+
   color: white;
   font-size: 30px;
+
   cursor: pointer;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+
+  transition: 0.3s;
+}
+
+.fabMain:hover{
+  transform: scale(1.1) rotate(90deg);
 }
 
 .fabOptions {
@@ -232,8 +389,8 @@ textarea {
   padding: 10px 15px;
   border-radius: 20px;
   border: none;
-  background: #333;
-  color: white;
+  background: #FFDE59;
+  color: #1A1A1A;
   cursor: pointer;
 }
 
@@ -244,7 +401,8 @@ textarea {
 /* ===== MOBILE ===== */
 @media (max-width: 600px) {
   .popupContent {
-    width: 90%;
+    width: 70%;
+    
   }
 
   #cards {
@@ -254,12 +412,45 @@ textarea {
     padding: 20px;
   }
 
-    .rightGroup {
-    display: none; /* ซ่อนปุ่มเดิม */
+  .rightGroup {
+    display: none;
   }
 
   .fabMenu {
-    display: flex; /* แสดงเมนูลอย */
+    display: flex;
+  }
+
+  input,
+  select {
+    padding: 6px 8px;
+    font-size: 14px;
+    margin: 3px;
+  }
+
+  #search {
+    width: 120px;
+  }
+
+  #emojiFilter {
+    width: 90px;
+  }
+
+  #categoryFilter {
+    width: 110px;
+  }
+
+  .headerBar{
+    grid-template-columns:1fr;
+    text-align:center;
+    gap:8px;
+  }
+
+  .langSwitch{
+    justify-self:center;
+  }
+
+  .headerBar h1{
+    font-size:22px;
   }
   
 }
