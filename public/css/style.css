@@ -267,6 +267,10 @@ textarea:focus{
   margin: 5px 0;
 }
 
+.cardMood{
+  font-size: 30px;
+}
+
 /* ===== POPUP ===== */
 .popup {
   display: none;

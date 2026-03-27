@@ -8,42 +8,75 @@ let recognition = null;
 let currentLang = "th";
 let translateCache = {};
 
+// async function createCard(d) {
+
+//   // กรณีภาษาไทย
+//   if (currentLang === "th") {
+//     return `
+//     <div class="card">
+//       <h3>${d.song_name}</h3>
+//       <p>${d.emoji}</p>
+//       <p>${d.description}</p>
+//     </div>
+//     `;
+//   }
+
+//   // กรณีภาษาอังกฤษ
+//   if (currentLang === "en") {
+//     // const name = await translateText(d.song_name, "en");
+//     // const desc = await translateText(d.description, "en");
+
+//     const [name, desc] = await Promise.all([
+//       translateText(d.song_name, "en"),
+//       translateText(d.description, "en")
+//     ]);
+
+//     return `
+//     <div class="card">
+//       <h3>${name}</h3>
+//       <p>${d.emoji}</p>
+//       <p>${desc}</p>
+//     </div>
+//     `;
+//   }
+
+// }
 async function createCard(d) {
+  // แปลอังกฤษ (ใช้ cache เหมือนเดิม)
+  const [descEN] = await Promise.all([
+    translateText(d.song_name, "en"),
+    translateText(d.description, "en"),
+  ]);
+  const desc = await translateText(d.description, "en");
 
-  // กรณีภาษาไทย
-  if (currentLang === "th") {
-    return `
-    <div class="card">
-      <h3>${d.song_name}</h3>
-      <p>${d.emoji}</p>
-      <p>${d.description}</p>
+  return `
+  <div class="card">
+
+    <!-- 🎵 ชื่อเพลง -->
+    <div class="cardHeader">
+      <h3>🎧 ${d.song_name}</h3>
     </div>
-    `;
-  }
-
-  // กรณีภาษาอังกฤษ
-  if (currentLang === "en") {
-    // const name = await translateText(d.song_name, "en");
-    // const desc = await translateText(d.description, "en");
-
-    const [name, desc] = await Promise.all([
-      translateText(d.song_name, "en"),
-      translateText(d.description, "en")
-    ]);
-
-    return `
-    <div class="card">
-      <h3>${name}</h3>
-      <p>${d.emoji}</p>
-      <p>${desc}</p>
+      <br />
+    <!-- 😊 Mood -->
+    <div class="cardMood">
+      ${d.emoji}
     </div>
-    `;
-  }
+    <br />
+    <!-- 🇹🇭 ไทย -->
+    <div class="cardDesc th">
+      🇹🇭 ${d.description}
+    </div>
+      <br />
+    <!-- 🇬🇧 อังกฤษ -->
+    <div class="cardDesc en">
+      🇬🇧 ${desc}
+    </div>
 
+  </div>
+  `;
 }
 
 async function translateText(text, targetLang) {
-
   const key = text + "_" + targetLang;
 
   // ถ้าเคยแปลแล้ว ใช้ cache
@@ -69,7 +102,7 @@ async function translateText(text, targetLang) {
 }
 
 function setLanguage(lang) {
-  currentLang = lang; 
+  currentLang = lang;
   const emojiFilter = document.getElementById("emojiFilter");
   const categoryFilter = document.getElementById("categoryFilter");
   const emojiPopup = document.getElementById("emoji");
@@ -233,15 +266,6 @@ function setLanguage(lang) {
   showSongs(allSongs);
 }
 
-function startSystem() {
-  speak("ระบบพร้อมใช้งาน");
-
-  setTimeout(() => {
-    startVoiceMode();
-
-    speak("พูดคำว่าแบ่งปัน");
-  }, 300);
-}
 // function loadAll() {
 //   fetch(API + "/songs")
 //     .then((r) => r.json())
@@ -282,7 +306,6 @@ async function loadAll() {
 // }
 async function loadRandom() {
   setInterval(async () => {
-
     const r = await fetch(API + "/songs");
     const data = await r.json();
 
@@ -295,7 +318,6 @@ async function loadRandom() {
     }
 
     document.getElementById("cards").innerHTML = html;
-
   }, 3000);
 }
 
@@ -370,13 +392,9 @@ function saveSong(event) {
 //   document.getElementById("cards").innerHTML = html;
 // }
 async function showSongs(data) {
-
-  const cards = await Promise.all(
-    data.map(d => createCard(d))
-  );
+  const cards = await Promise.all(data.map((d) => createCard(d)));
 
   document.getElementById("cards").innerHTML = cards.join("");
-
 }
 
 function filterSongs() {
@@ -395,6 +413,23 @@ function filterSongs() {
   showSongs(filtered);
 }
 
+function speakByLang(th, en) {
+  if (currentLang === "en") {
+    speak(en);
+  } else {
+    speak(th);
+  }
+}
+
+function startSystem() {
+  speakByLang("ระบบพร้อมใช้งาน", "The system is ready.");
+
+  setTimeout(() => {
+    startVoiceMode();
+
+    speakByLang("พูดคำว่าแบ่งปัน", " Say the word share.");
+  }, 300);
+}
 let step = 0;
 
 function startVoiceMode() {
@@ -410,6 +445,7 @@ function startVoiceMode() {
   recognition = new SpeechRecognition();
 
   recognition.lang = "th-TH";
+  // recognition.lang = currentLang === "en" ? "en-US" : "th-TH";
 
   recognition.continuous = true;
 
@@ -430,14 +466,19 @@ function startVoiceMode() {
 
     /* ⭐ GLOBAL COMMAND ปิดได้ทุกเวลา */
 
-    if (text.includes("ปิด") || text.includes("cancel")) {
+    if (
+      text.includes("ปิด") ||
+      text.includes("cancel") ||
+      text.includes("turn off") ||
+      text.includes("close")
+    ) {
       closePopup();
 
       resetForm();
 
       step = 0;
 
-      speak("ปิดแล้ว");
+      speakByLang("ปิดแล้ว", "Closed.");
 
       return;
     }
@@ -445,12 +486,17 @@ function startVoiceMode() {
     /* STEP 0 เปิดระบบ */
 
     if (step == 0) {
-      if (text.includes("แบ่งปัน") || text.includes("เพิ่มเพลง")) {
+      if (
+        text.includes("แบ่งปัน") ||
+        text.includes("เพิ่มเพลง") ||
+        text.includes("แชร์") ||
+        text.includes("share")
+      ) {
         openPopup();
 
         step = 1;
 
-        speak("บอกชื่อเพลง");
+        speakByLang("บอกชื่อเพลง", "Tell me the name of the song.");
 
         return;
       }
@@ -460,11 +506,14 @@ function startVoiceMode() {
 
     if (step == 1) {
       document.getElementById("songName").value = text;
-      speak("ชื่อเพลง " + text);
+      speakByLang("ชื่อเพลง " + text, "Song title " + text);
 
       step = 2;
 
-      speak("เลือกอารมณ์ เช่น เศร้า สุข รัก หรือ มัน");
+      speakByLang(
+        "เลือกอารมณ์ เช่น เศร้า สนุก รัก หรือ ผ่อนคลาย",
+        "Choose an emotion, such as sad, happy, loving, or relaxed.",
+      );
 
       return;
     }
@@ -472,9 +521,13 @@ function startVoiceMode() {
     /* STEP 2 Emoji */
 
     if (step == 2) {
-      if (text.includes("เศร้า")) {
+      if (
+        text.includes("เศร้า") ||
+        text.includes("อารมณ์เศร้า") ||
+        text.includes("Sadness")
+      ) {
         document.getElementById("emoji").value = "😢";
-        speak("อารมณ์ เศร้า");
+        speakByLang("อารมณ์ เศร้า", "Sad mood");
       } else if (
         text.includes("สุข") ||
         text.includes("ดีใจ") ||
@@ -482,26 +535,32 @@ function startVoiceMode() {
         text.includes("มีความสุข")
       ) {
         document.getElementById("emoji").value = "😊";
-        speak("อารมณ์ สุข");
+        speakByLang("อารมณ์ สุข", "Happy mood");
       } else if (text.includes("รัก") || text.includes("love")) {
         document.getElementById("emoji").value = "❤️";
-        speak("อารมณ์ รัก");
+        speakByLang("อารมณ์ รัก", "Emotions of love");
       } else if (
         text.includes("มัน") ||
         text.includes("สนุก") ||
         text.includes("แดนซ์")
       ) {
         document.getElementById("emoji").value = "🔥";
-        speak("อารมณ์ มัน");
+        speakByLang("อารมณ์ มัน", "Fun mood");
       } else {
-        speak("ไม่เข้าใจอารมณ์ ลองพูดใหม่");
+        speakByLang(
+          "ไม่เข้าใจอารมณ์ ลองพูดใหม่",
+          "I don't understand your emotion. Please try speaking again.",
+        );
 
         return;
       }
 
       step = 3;
 
-      speak("พูดหมวดหมู่เพลงเช่น เพลงเศร้า เพลงรัก เพลงสนุก เพลงให้กำลังใจ");
+      speakByLang(
+        "พูดหมวดหมู่เพลงเช่น เพลงเศร้า เพลงรัก เพลงสนุก เพลงให้กำลังใจ",
+        "Talk about music categories such as sad songs, love songs, fun songs, and motivational songs.",
+      );
 
       return;
     }
@@ -509,27 +568,30 @@ function startVoiceMode() {
     if (step == 3) {
       if (text.includes("เพลงเศร้า") || text.includes("เศร้า")) {
         document.getElementById("category").value = "เศร้า";
-        speak("หมวดหมู่ เศร้า");
+        speakByLang("หมวดหมู่ เพลงเศร้า", "Category: Sad Songs");
       } else if (text.includes("เพลงรัก") || text.includes("รัก")) {
         document.getElementById("category").value = "รัก";
-        speak("หมวดหมู่ รัก");
+        speakByLang("หมวดหมู่ เพลงรัก", "Category: Love Songs");
       } else if (text.includes("เพลงสนุก") || text.includes("สนุก")) {
         document.getElementById("category").value = "สนุก";
-        speak("หมวดหมู่ สนุก");
+        speakByLang("หมวดหมู่ เพลงสนุก", "Category: Fun Songs");
       } else if (
         text.includes("เพลงให้กำลังใจ") ||
         text.includes("ให้กำลังใจ")
       ) {
         document.getElementById("category").value = "กำลังใจ";
-        speak("หมวดหมู่ ให้กำลังใจ");
+        speakByLang("หมวดหมู่ เพลงให้กำลังใจ", "Category: Inspirational Songs");
       } else {
-        speak("ไม่เข้าใจหมวดหมู่ ลองพูดใหม่");
+        speakByLang(
+          "ไม่เข้าใจหมวดหมู่ ลองพูดใหม่",
+          "I don't understand the category. Please try again.",
+        );
         return;
       }
 
       step = 4;
 
-      speak("พูดคำอธิบาย");
+      speakByLang("พูดคำอธิบาย", "Give an explanation.");
 
       return;
     }
@@ -538,18 +600,18 @@ function startVoiceMode() {
 
     if (step == 4) {
       document.getElementById("desc").value = text;
-      speak("คำอธิบาย " + text);
+      speakByLang("คำอธิบาย " + text, "Description" + text);
 
       step = 5;
 
-      speak("พูด บันทึก หรือ ปิด");
+      speakByLang("พูด บันทึก หรือ ปิด", "Speak, record, or close.");
 
       return;
     }
 
     /* STEP 5 Save */
 
-    if (step >= 5) {
+    if (step == 5) {
       if (text.includes("บันทึก") || text.includes("save")) {
         saveSong();
 
@@ -557,23 +619,36 @@ function startVoiceMode() {
 
         step = 0;
 
-        speak("บันทึกสำเร็จ");
+        speakByLang("บันทึกสำเร็จ", "Recording successful.");
 
-        speak("พูดแบ่งปันเพื่อเพิ่มเพลง");
+        speakByLang(
+          "พูดแบ่งปันเพื่อเพิ่มเพลงอีกครั้ง",
+          "Speak up and share to add the song again.",
+        );
 
         return;
       }
 
-      if (text.includes("ปิด") || text.includes("cancel")) {
+      if (
+        text.includes("ปิด") ||
+        text.includes("ยกเลิก") ||
+        text.includes("cancel") ||
+        text.includes("close") ||
+        text.includes("stop") ||
+        text.includes("exit")
+      ) {
         closePopup();
 
         // resetForm();
 
         step = 0;
 
-        speak("ปิดแล้ว");
+        speakByLang("ปิดแล้ว", "Closed");
 
-        speak("พูดแบ่งปันเพื่อเพิ่มเพลง");
+        speakByLang(
+          "พูดแบ่งปันเพื่อเพิ่มเพลง",
+          "Speak up and share to add more music.",
+        );
 
         return;
       }
@@ -589,16 +664,40 @@ speechSynthesis.onvoiceschanged = () => {
   console.log("voices loaded", voices);
 };
 
-function speak(text) {
-  let msg = new SpeechSynthesisUtterance();
+// function speak(text) {
+//   let msg = new SpeechSynthesisUtterance();
 
+//   msg.text = text;
+
+//   // หาเสียงไทยก่อน
+//   let thai = voices.find((v) => v.lang == "th-TH");
+
+//   // ถ้าไม่มีใช้อังกฤษ
+//   msg.voice = thai || voices[0];
+
+//   speechSynthesis.speak(msg);
+// }
+
+function speak(text) {
+  if (recognition) recognition.stop();
+  let msg = new SpeechSynthesisUtterance();
   msg.text = text;
 
-  // หาเสียงไทยก่อน
-  let thai = voices.find((v) => v.lang == "th-TH");
+  // ตรวจว่าข้อความเป็นอังกฤษไหม
+  const isEnglish = /[a-zA-Z]/.test(text);
 
-  // ถ้าไม่มีใช้อังกฤษ
-  msg.voice = thai || voices[0];
+  // หา voice
+  let thaiVoice = voices.find((v) => v.lang === "th-TH");
+  let engVoice = voices.find((v) => v.lang === "en-US");
+
+  // เลือกภาษา
+  if (currentLang === "en" || isEnglish) {
+    msg.voice = engVoice || voices[0];
+    msg.lang = "en-US";
+  } else {
+    msg.voice = thaiVoice || voices[0];
+    msg.lang = "th-TH";
+  }
 
   speechSynthesis.speak(msg);
 }
