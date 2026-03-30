@@ -212,22 +212,6 @@ textarea:focus{
 }
 
 
-/* ===== CANCEL BUTTON ===== */
-.btn-cancel{
-  position:absolute;
-  top:14px;
-  right:14px;
-  background:#9B5FE3;
-  color:white;
-  border:none;
-  width:40px;
-  height:40px;
-  border-radius:14px;
-  font-size:18px;
-  cursor:pointer;
-  transition:0.2s;
-}
-
 .btn-cancel:hover{
   background:#7f44d6;
 }
@@ -242,7 +226,7 @@ textarea:focus{
 }
 
 /* ===== CARD STYLE ===== */
-.card {
+/* .card {
   background: white;
   padding: 15px;
   border-radius: 18px;
@@ -261,6 +245,7 @@ textarea:focus{
 .card h3 {
   margin: 0;
   color: #9B5FE3;
+  font-weight: bold;
 }
 
 .card p {
@@ -271,6 +256,177 @@ textarea:focus{
   font-size: 30px;
 }
 
+.label {
+  color: #9B5FE3;
+  font-weight: bold;
+} */
+
+/* ===== CARD GRID ===== */
+#cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  padding: 24px;
+  margin: 0 auto;
+}
+
+/* ===== CARD ===== */
+.card {
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e8e1f5;
+  transition: transform 0.25s;
+}
+.card:hover {
+  transform: translateY(-4px);
+}
+
+/* --- Top section --- */
+.card-top {
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid #f0eaf8;
+}
+.card-no {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 10px;
+  color: #c3b5dc;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+.card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 30px;
+  font-weight: 400;
+  color: #3d2b6b;
+  line-height: 1.3;
+  margin: 0 0 10px;
+}
+.card-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f3eeff;
+  border: 1px solid #ddd0f8;
+  border-radius: 20px;
+  padding: 4px 12px;
+}
+.card-tag-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+.card-tag-text {
+  font-size: 16px;
+  font-weight: 500;
+  color: #7c5cbf;
+  letter-spacing: 0.5px;
+}
+
+/* --- Mood strip --- */
+.card-mood-strip {
+  padding: 14px 20px 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid #f0eaf8;
+}
+.mood-face {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  flex-shrink: 0;
+  background: #f5f0ff;
+  border: 1px solid #e0d4ff;
+}
+.mood-label {
+  font-size: 20px;
+  font-weight: 500;
+  color: #b09fd0;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+.mood-name {
+  font-size: 20px;
+  color: #5a4480;
+}
+
+/* --- Description --- */
+.card-desc {
+  padding: 14px 20px 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.desc-lang {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 5px;
+}
+/* .desc-flag {
+  font-size: 20px;
+  letter-spacing: 1.5px;
+  color: #c3b5dc;
+  font-weight: 500;
+} */
+/* .desc-line {
+  flex: 1;
+  height: 1px;
+  background: #f0eaf8;
+} */
+.desc-text {
+  font-size: 18px;
+  color: #7a6a96;
+  line-height: 1.5;
+  font-weight: 300;
+  margin: 0;
+}
+
+/* --- Footer --- */
+.card-foot {
+  padding: 12px 20px;
+  border-top: 1px solid #f0eaf8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.foot-label {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 12px;
+  color: #c3b5dc;
+  letter-spacing: 1.5px;
+}
+.card-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+}
+.card-bars span {
+  width: 3px;
+  border-radius: 2px;
+  background: #c4b0ff;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 600px) {
+  #cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    padding: 16px;
+  }
+}
 /* ===== POPUP ===== */
 .popup {
   display: none;
@@ -338,6 +494,12 @@ textarea {
   background: transparent;
   font-size: 18px;
   cursor: pointer;
+  color:white;
+  width:40px;
+  height:40px;
+  border-radius:14px;
+  transition:0.2s;
+  
 }
 
 /* จัดปุ่มล่าง */
@@ -402,6 +564,86 @@ textarea {
   display: flex;
 }
 
+.popupContent.qrBox {
+  align-items: center;
+  text-align: center;
+}
+
+#qrImage {
+  width: 100%;
+  max-width: 180px;
+  height: auto;
+}
+
+.qrBox h2 {
+  align-self: stretch;   /* 🔥 บังคับให้เต็ม */
+  text-align: center;
+}
+
+/* .qrBox img {
+  width: 200px;
+  margin: 20px 0;
+  border-radius: 10px;
+} */
+
+.qrButtons {
+  margin-top: 20px; 
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+
+.qrButtons button {
+  border: none;
+  padding: 10px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.qrButtons button:first-child {
+  background: #6c4cff;
+  color: white;
+}
+
+.qrButtons button:last-child {
+  background: #eee;
+}
+
+.qrButtons button {
+  border: none;
+  padding: 12px 22px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  transition: all 0.25s ease;
+}
+
+/* ปุ่มดาวน์โหลด */
+.qrButtons button:first-child {
+  background: linear-gradient(135deg, #9B5FE3, #7e3fd9);
+  color: white;
+
+  box-shadow: 0 6px 15px rgba(155, 95, 227, 0.4);
+}
+
+/* hover */
+.qrButtons button:first-child:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 10px 25px rgba(155, 95, 227, 0.6);
+}
+
+/* ตอนกด */
+.qrButtons button:first-child:active {
+  transform: scale(0.95);
+}
+
 /* ===== MOBILE ===== */
 @media (max-width: 600px) {
   .popupContent {
@@ -455,6 +697,15 @@ textarea {
 
   .headerBar h1{
     font-size:22px;
+  }
+
+  .qrBox {
+    max-width: 95%;
+    padding: 16px;
+  }
+
+  #qrImage {
+    max-width: 160px;
   }
   
 }

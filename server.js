@@ -54,6 +54,8 @@ app.post("/songs", (req, res) => {
   );
 });
 
+app.use("/img", express.static("img"));
+
 app.listen(3000, () => {
   console.log("Server run 3000");
 });
