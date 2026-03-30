@@ -2,8 +2,9 @@ speechSynthesis.onvoiceschanged = () => {
   console.log("voices loaded");
 };
 
+require('dotenv').config();
 // const API = "http://localhost:3000";
-const API = "";
+const API = process.env.URL;
 let allSongs = [];
 let recognition = null;
 let currentLang = "th";
