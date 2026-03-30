@@ -56,6 +56,16 @@ app.post("/songs", (req, res) => {
 
 app.use("/img", express.static("img"));
 
-app.listen(3000, () => {
-  console.log("Server run 3000");
+const PORT = process.env.PORT || 3000;
+
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/public/index.html");
+});
+app.get("/sharing-card", (req, res) => {
+  res.sendFile(__dirname + "/public/phone.html");
+});
+
+
+app.listen(PORT, () => {
+  console.log("Server run", PORT);
 });

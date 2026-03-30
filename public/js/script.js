@@ -2,7 +2,8 @@ speechSynthesis.onvoiceschanged = () => {
   console.log("voices loaded");
 };
 
-const API = "http://localhost:3000";
+// const API = "http://localhost:3000";
+const API = "";
 let allSongs = [];
 let recognition = null;
 let currentLang = "th";
@@ -1305,7 +1306,7 @@ function speak(text) {
 }
 
 function showQR() {
-  document.getElementById("qrPopup").style.display = "flex";
+  document.getElementById("qrPopup").style.display = "block";
 }
 
 function closeQR() {
