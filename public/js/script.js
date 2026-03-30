@@ -4,7 +4,7 @@ speechSynthesis.onvoiceschanged = () => {
 
 require('dotenv').config();
 // const API = "http://localhost:3000";
-const API = process.env.URL;
+const API = "";
 let allSongs = [];
 let recognition = null;
 let currentLang = "th";

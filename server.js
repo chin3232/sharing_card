@@ -31,26 +31,20 @@ app.get("/songs", (req, res) => {
 });
 
 app.post("/songs", (req, res) => {
-  const {
-    // song,
-
-    // emoji,
-
-    // desc,
-    song_name,
-    emoji,
-    description,
-    category
-  } = req.body;
+  const { song_name, emoji, description, category } = req.body;
 
   db.query(
     "INSERT INTO songs (song_name, emoji, description, category) VALUES(?,?,?,?)",
-
     [song_name, emoji, description, category],
-
     (err, result) => {
-      res.json("ok");
-    },
+      // เพิ่มการเช็ค Error ตรงนี้
+      if (err) {
+        console.error("❌ Database Error:", err); // แสดง Error ใน Log ของ Render
+        return res.status(500).json({ error: err.message }); // แจ้งกลับไปว่าพัง
+      }
+      
+      res.json("ok"); // ถ้าไม่มี Error ถึงจะตอบ ok
+    }
   );
 });
 
